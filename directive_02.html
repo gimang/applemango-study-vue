@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Directive</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+    .list { width: 400px; border: 1px solid black; border-collapse: collapse; margin: 15px;}
+    .list td, #list th {border: 1px solid black; text-align: center}
+    .list > thead > tr {color: beige; background-color: slategrey}
+  </style>
+</head>
+
+<body>
+	<div id="account">
+		예금액 : <input type="text" v-model="amount" />
+		<img src="image/error.png" style="width: 15px;height: 15px;vertical-align: middle" v-show="amount < 0" >
+  </div>
+  
+  <div id="address">
+    <table class="list">
+      <thead>
+        <tr>
+          <th>번호</th><th>이름</th><th>전화번호</th><th>주소</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="contact in contacts" :key="contact.no">
+          <td>{{contact.no}}</td>
+          <td>{{contact.name}}</td>
+          <td>{{contact.tel}}</td>
+          <td>{{contact.addr}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="vForObj">
+    <select v-model="selectedVal">
+      <option disabled="disabled" >지역을 선택하세요</option>
+      <option v-for="(value, key, index) in regions" :key="index" :value="key">
+        {{index}} : {{value}}
+      </option>=
+    </select>
+    <input type="text" readonly="readonly" :value="selectedVal" v-if="selectedVal === 'A'">
+  </div>
+
+</body>
+
+<script>
+	var account = new Vue({
+    el: '#account',
+    data: {
+      amount: 0
+    }
+  });
+
+  var personData = {
+    contacts: [
+      {no: 1, name: '사나', tel: '010-1004-1004', addr: '서울'},
+      {no: 2, name: '모모', tel: '010-1004-1004', addr: '인천'},
+      {no: 3, name: '쯔위', tel: '010-1004-1004', addr: '대구'},
+      {no: 4, name: '연우', tel: '010-1004-1004', addr: '천안'},
+      {no: 5, name: '성소', tel: '010-1004-1004', addr: '광주'},
+      {no: 6, name: '혜리', tel: '010-1004-1004', addr: '평양'},
+    ]
+  };
+
+  var address = new Vue({
+    el: '#address',
+    data: personData
+  })
+
+  var regions = new Vue({
+    el: '#vForObj',
+    data: {
+      regions: {
+        A: 'Asia',
+        B: 'America',
+        C: 'Europe',
+        D: 'Africa',
+        E: 'Oceania'
+      },
+      selectedVal: 'please choose'
+    }
+  })
+
+
+</script>
+
+</html>
