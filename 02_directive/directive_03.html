@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Directive</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+      .list { width: 400px; border: 1px solid black; border-collapse: collapse; margin: 15px;}
+      .list td, #list th {border: 1px solid black; text-align: center}
+      .list > thead > tr {color: beige; background-color: slategrey}
+    </style>
+</head>
+
+<body>
+  <div id="computed">
+    <input type="text" v-model="num"><br>
+    1부터 입력된 수 까지의 합 : <span>{{sum}}</span>
+  </div>
+  <br>
+
+  <div id="filter">
+    <p>국가명 : <input type="text" placeholder="국가명" v-model="countryName"/></p>
+    <table class="list">
+      <thead>
+        <tr>
+          <th>번호</th><th>국가명</th><th>수도</th><th>지역</th>
+        </tr>
+      </thead>
+      <tbody id="contacts">
+        <tr v-for="(item, index) in filtered" :key="item.no">
+          <td>{{item.no}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.capital}}</td>
+          <td>{{item.region}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script>
+    var vmSum = new Vue({
+      el: '#computed',
+      data: {
+        num: 0
+      },
+      computed: {
+        sum: function() {
+          var n = Number(this.num);
+
+          if(Number.isNaN(n) || n < 1){
+            return 0;
+          } else {
+            return ((1 + n) * n) / 2;
+          }
+
+        }
+      }
+    });
+
+    var model = {
+      countryName: '',
+      countries: [
+        {no: 1, name: '미국', capital: '워싱턴DC', region: 'america'},
+        {no: 2, name: '프랑스', capital: '파리', region: 'europe'},
+        {no: 3, name: '영국', capital: '런던', region: 'europe'},
+        {no: 4, name: '중국', capital: '베이징', region: 'asia'},
+        {no: 5, name: '태국', capital: '방콕', region: 'asia'},
+        {no: 6, name: '모로코', capital: '라바트', region: 'africa'},
+        {no: 7, name: '라오스', capital: '비엔티안', region: 'asia'},
+        {no: 8, name: '베트남', capital: '하노이', region: 'asia'}
+      ]
+    };
+
+    var countries = new Vue({
+      el: '#filter',
+      data: model,
+      computed: {
+        filtered : function(){
+          var cname = this.countryName.trim();
+
+          return this.countries.filter(function(item, index){
+            if(item.name.indexOf(cname) > -1){
+              return true;
+            }
+          })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
