@@ -13,14 +13,80 @@
   <div id="test1">
     {{name}}
   </div>
+  <br>
+
+  <div id="methodTest">
+    <input type="text" v-model="num"><br>
+    1부터 입력된 수 까지의 합 : <span>{{sum()}}</span>
+  </div>
+  <br>
+
+  <div id="watchTest">
+    x : <input type='text' v-model="x" /><br />
+    y : <input type='text' v-model="y" /><br />
+    덧셈 결과 : {{sum}}
+  </div>
 </body>
 <script>
   var test1 = new Vue({
     el: '#test1',
     data: {
       name: '홍길동'
+    },
+    computed: {
+      profile: {
+        get: function () {
+          return this.name;
+        },
+        set: function (name) {
+          this.name = '내 이름은 ' + name + '입니다';
+        }
+      }
     }
   });
+
+  var vmSum = new Vue({
+    el: '#methodTest',
+    data: {
+      num: 0
+    },
+    methods: {
+      sum: function () {
+        var n = Number(this.num);
+
+        if (Number.isNaN(n) || n < 1) {
+          return 0;
+        } else {
+          return ((1 + n) * n) / 2;
+        }
+
+      }
+    }
+  });
+
+  var vm = new Vue({
+    el: "#watchTest",
+    data: {
+      x: 0,
+      y: 0,
+      sum: 0
+    },
+    watch: {
+      x: function (v) {
+        console.log('## x 변경')
+        var result = Number(v) + Number(this.y);
+        if (isNaN(result)) this.sum = 0;
+        else this.sum = result;
+      },
+      y: function (v) {
+        console.log('## y 변경')
+        this.y = v;
+        var result = Number(this.x) + Number(v);
+        if (isNaN(result)) this.sum = 0;
+        else this.sum = result;
+      }
+    }
+  })
 </script>
 
 </html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>04-05</title>
+  <style>
+    #outer {
+      width: 200px;
+      height: 200px;
+      border: solid 2px black;
+      background-color: aqua;
+      position: relative;
+      height: 100px;
+      width: 50px;
+      padding: 10px 10px 10px 10px;
+    }
+
+    #inner {
+      width: 100px;
+      height: 100px;
+      border: solid 2px black;
+      background-color: yellow;
+    }
+  </style>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="example">
+    <div id="outer" @click="outerClick">
+      <div id="inner" @click.stop="innerClick"></div>
+    </div>
+  </div>
+  <br>
+
+  <div id="mouseEvent" v-on:contextmenu.prevent="ctxStop" @mouseup.left="leftMouse" @mouseup.right="rightMouse" style="background-color: blanchedalmond;">
+    <div>
+      Left Click : 왼쪽으로<br />
+      Right Click : 오른쪽으로
+    </div>
+    <img src="../image/foot.jpg" v-bind:style="{ position:'relative', left: pos.left + 'px', top:pos.top +'px' }" />
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: "#example",
+      methods: {
+        outerClick: function (e) {
+          console.log("### OUTER CLICK")
+          console.log("Event Phase : ", e.eventPhase);
+          console.log("Current Target : ", e.currentTarget);
+          console.log("Target : ", e.target);
+        },
+        innerClick: function (e) {
+          console.log("### INNER CLICK")
+          console.log("Event Phase : ", e.eventPhase);
+          console.log("Current Target : ", e.currentTarget);
+          console.log("Target : ", e.target);
+          // e.stopPropagation();
+        }
+      }
+    });
+
+    var vm1 = new Vue({
+      el: "#mouseEvent",
+      data: {
+        pos: {
+          left: 100,
+          top: 100
+        }
+      },
+      methods: {
+        ctxStop: function (e) {},
+        leftMouse: function (e) {
+          if (this.pos.left > 30)
+            this.pos.left -= 30;
+          console.log("Move Left!!");
+        },
+        rightMouse: function (e) {
+          this.pos.left += 30;
+          console.log("Move Right!!");
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

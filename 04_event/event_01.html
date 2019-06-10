@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>04-01</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .layout1 {
+      margin: 30px 30px 30px 30px;
+    }
+  </style>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="example" class="container layout1">
+    <p><input type="text" v-model="amount" class="form-control" /></p>
+    <p>
+      <button id="deposit" v-on:click="balance += parseInt(amount)" class="btn btn-primary">예금</button>
+      <button id="withdraw" @click="widthraw" class="btn btn-primary">인출</button>
+    </p>
+    <h3>계좌 잔고 : {{balance}}</h3>
+    <br>
+  </div>
+
+  <div id="defaultEvent" v-on:contextmenu.prevent="ctxStop">
+    <a href="https://google.co.kr" @click="confirmGg">구글</a>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: "#example",
+      data: {
+        amount: 0,
+        balance: 0,
+      },
+      methods: {
+        widthraw: function (e) {
+          this.balance -= this.amount;
+          console.log(e);
+        }
+      }
+    });
+
+    var vm = new Vue({
+      el: '#defaultEvent',
+      methods: {
+        confirmGg: function (e) {
+          if (!confirm('구글로 이동할까요?')) {
+            e.preventDefault();
+          }
+        },
+        ctxStop: function (e) {
+          console.log(e);
+          // e.preventDefault();
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

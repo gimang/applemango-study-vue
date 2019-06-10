@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue_Style</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+    .test {
+      height: 100px;
+      background-color: beige;
+    }
+
+    .set1 {
+      background-color: aqua;
+      color: purbple;
+    }
+    .set2 {
+      text-align: center;
+      width: 120px;
+    }
+    .set3 {
+      border: sandybrown dashed 1px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="styleTest" class="test">
+    <button id="btn" v-bind:style="style1" @mouseover.stop="overEvent" @mouseout.stop="outEvent">테스트</button>
+  </div>
+  <br>
+
+  <div id="classTest">
+    <button id="btn1" v-bind:class="btnCls">버튼1</button>
+    <p>
+      <input type="checkbox" v-model="btnCls.set1" value="true">set1 디자인<br>
+      <input type="checkbox" v-model="btnCls.set2" value="true">set2 디자인<br>
+      <input type="checkbox" v-model="btnCls.set3" value="true">set3 디자인<br>
+    </p>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#styleTest',
+      data: {
+        style1: {
+          backgroundColor: 'aqua',
+          border: 'solid 1px gray',
+          width: '100px',
+          textAlign: 'center'
+        }
+      },
+      methods: {
+        overEvent: function (e) {
+          this.style1.backgroundColor = 'purple';
+          this.style1.color = 'yellow';
+          console.log('mouseover : ' + e.eventPhase);
+        },
+        outEvent: function (e) {
+          this.style1.backgroundColor = 'aqua';
+          this.style1.color = 'black';
+          console.log('mouseout : ' + e.eventPhase);
+        },
+      }
+    });
+    
+    var vm2 = new Vue({
+      el: '#classTest',
+      data: {
+        btnCls: {
+          set1: false,
+          set2: false,
+          set3: false
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue Instance</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+
+  <div id="methodTest">
+    <input type="text" v-model="num"><br>
+    1부터 입력된 수 까지의 합 : <span>{{sum()}}</span>
+  </div>
+  <br>
+
+</body>
+<script>
+  var vmSum = new Vue({
+    el: '#methodTest',
+    data: {
+      num: 0
+    },
+    beforeCreate: function(){
+      console.log('beforeCreate : ' + this.num);
+    },
+    created: function(){
+      console.log('created : ' + this.num);
+    },
+    updated: function() {
+      console.log('updated : ' + this.num);
+    },
+    methods: {
+      sum: function () {
+        var n = Number(this.num);
+
+        if (Number.isNaN(n) || n < 1) {
+          return 0;
+        } else {
+          return ((1 + n) * n) / 2;
+        }
+
+      }
+    }
+  });
+</script>
+
+</html>
