@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/vue"></script>
+  <title>Component Basic3</title>
+  <style>
+    .list { width: 400px; border: 1px solid black; border-collapse: collapse; margin: 15px;}
+    .list td, #list th {border: 1px solid black; text-align: center}
+    .list > thead > tr {color: beige; background-color: slategrey}
+  </style>
+</head>
+
+<template id="timeTemplate">
+  <div>
+    <span>{{nowTS}}</span>
+    <button @click="timeClick">현재 시간</button>
+  </div>
+</template>
+<template id="listTemplate">
+  <li>{{message}}</li>
+</template>
+
+<template id="trTemplate">
+  <tr>
+    <td>안녕</td><td>그리드</td>
+  </tr>
+</template>
+
+<script>
+  Vue.component('time-component', {
+    template: '#timeTemplate',
+    data: function () {
+      return {
+        nowTS: 0
+      }
+    },
+    methods: {
+      timeClick: function () {
+        this.nowTS = (new Date()).getTime();
+      }
+    },
+  });
+
+  Vue.component('list-component', {
+    template: '#listTemplate',
+    props: ['message']
+  });
+
+  Vue.component('tr-component', {
+    template: '#trTemplate'
+  });
+</script>
+
+<body>
+  <div id="app">
+    <time-component></time-component>
+    <time-component></time-component>
+  </div>
+  <br>
+
+  <div id="propsTest">
+    <ul>
+      <div>div</div>
+      <list-component message="Hello"></list-component>
+      <list-component message="곱창"></list-component>
+      <list-component message="치킨"></list-component>
+    </ul>
+  </div>
+  <br>
+
+  <table class="list">
+    <div>div</div>
+    <tr-component></tr-component>
+    <tr-component></tr-component>
+    <tr is="tr-component"></tr>
+    <tr is="tr-component"></tr>
+  </table>
+
+</body>
+
+<script>
+  var vm = new Vue({
+    el: '#app'
+  });
+
+  var vm1 = new Vue({
+    el: '#propsTest'
+  });
+
+  var vm2 = new Vue({
+    el: '.list'
+  })
+</script>
+
+</html>

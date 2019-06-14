@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Component Basic</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<template id="helloTemplate1">
+  <div>hello world 2!!!</div>
+</template>
+
+<script type="text/x-template" id="helloTemplate2">
+  <div>hello world 3!!!</div>
+</script>
+
+<body>
+
+  <div id="app1">
+    <hello-component></hello-component>
+    <hello-component></hello-component>
+    <hello-component></hello-component>
+    <hello-component2></hello-component2>
+    <hello-component3></hello-component3>
+  </div>
+  <br>
+
+  <script>
+    Vue.component('hello-component', {
+      template: '<div>hello world 1!!!</div>'
+    });
+
+    Vue.component('hello-component2',{
+      template: '#helloTemplate1'
+    });
+
+    Vue.component('hello-component3',{
+      template: '#helloTemplate2'
+    });
+
+    var app1 = new Vue({
+      el: '#app1'
+    });
+
+    
+
+  </script>
+</body>
+
+</html>

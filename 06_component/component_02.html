@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/vue"></script>
+  <title>Component Basic2</title>
+</head>
+
+<script>
+  Vue.component('option-component', {
+    template: '<option>hello</option>'
+  });
+</script>
+
+<body>
+  <div id="app">
+    <select>
+      <!-- <option-component></option-component>
+      <option-component></option-component> -->
+      <option is="option-component"></option>
+      <option is="option-component"></option>
+    </select>
+  </div>
+</body>
+
+<script>
+  var v = new Vue({
+    el: '#app'
+  })
+</script>
+</html>
